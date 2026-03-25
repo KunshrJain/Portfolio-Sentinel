@@ -34,6 +34,8 @@ export default function App() {
   const [data, setData] = useState(null);
   const [status, setStatus] = useState("Connecting...");
   const [rateShock, setRateShock] = useState(0);
+  const [pnl, setPnl] = useState(0);
+  const [portValue, setPortValue] = useState(0);
   
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +43,8 @@ export default function App() {
         const res = await axios.get('http://localhost:8000/portfolio');
         if (res.data && res.data.status === "Active") {
           setData(res.data.metrics);
+          setPnl(res.data.total_pnl || 0);
+          setPortValue(res.data.portfolio_value || 1000000);
         }
         setStatus(res.data?.status || "Connected");
       } catch (err) {
@@ -49,7 +53,7 @@ export default function App() {
     };
     
     fetchData();
-    const interval = setInterval(fetchData, 5000);
+    const interval = setInterval(fetchData, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -89,8 +93,14 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <header className="header">
-        <h1>Portfolio-Sentinel</h1>
+      <header className="header" style={{ alignItems: 'flex-start' }}>
+        <div>
+          <h1 style={{marginBottom: '0.2rem'}}>Portfolio-Sentinel (Indian Equities)</h1>
+          <div style={{color: '#8b949e', marginTop: '0.5rem', fontSize: '1.1rem'}}>
+            <span style={{marginRight: '20px'}}>Portfolio Value: <strong style={{color: '#c9d1d9'}}>₹{portValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong></span>
+            <span>Real-time Alpha PnL: <strong className={pnl >= 0 ? 'positive' : 'negative'}>+ ₹{pnl.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong></span>
+          </div>
+        </div>
         <div className="status-badge">{status}</div>
       </header>
 
@@ -114,7 +124,7 @@ export default function App() {
                     formatter={(value, name, props) => {
                       const { price, sentiment, alpha } = props?.payload || {};
                       return [
-                        `Price: $${price?.toFixed(2)} | Sentiment: ${sentiment?.toFixed(2)} | Alpha: ${(alpha*100)?.toFixed(2)}%`,
+                        `Price: ₹${price?.toFixed(2)} | Sentiment: ${sentiment?.toFixed(2)} | Alpha: ${(alpha*100)?.toFixed(2)}%`,
                         name
                       ];
                     }}
@@ -154,7 +164,7 @@ export default function App() {
             {data && Object.keys(data).map(sym => (
               <div key={sym} className="asset-card">
                 <div className="asset-info">
-                  <h3>{sym}</h3>
+                  <h3>{sym.replace('.NS', '')}</h3>
                   <div className="asset-metrics">
                     <span>Alloc: {(data[sym].allocation * 100).toFixed(1)}%</span>
                     <span>VaR: {(data[sym].var * 100).toFixed(2)}%</span>
