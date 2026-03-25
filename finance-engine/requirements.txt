@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+redis
+numpy
+pandas
+scikit-learn
+textblob
+sqlalchemy
+psycopg2-binary
+websockets
