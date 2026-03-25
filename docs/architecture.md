@@ -1,11 +1,9 @@
 # Distributed Agentic Financial Intelligence Architecture
 
 ## 1. Fintech Core
-**Written by me (Kunsh) in: Go**
 Responsibility: I built this node for high-velocity data ingestion via WebSockets. It connects securely to Redis and implements a resilient Pub/Sub pattern for trading ticks and macro events, ensuring immediate responsiveness without blocking the main event loops.
 
 ## 2. Finance Engine
-**Written by me (Kunsh) in: Python (FastAPI)**
 Responsibility: I designed this as the primary Quant engine. It actively computes and serves:
 - Risk Parity Asset Allocation routines
 - LSTM Predictive Modeling signals 
@@ -13,5 +11,4 @@ Responsibility: I designed this as the primary Quant engine. It actively compute
 - NLP Sentiment Synthesis data logic
 
 ## 3. Manager Dashboard
-**Written by me (Kunsh) in: React (Vite)**
 Responsibility: I constructed a high-performance heat map tree-map visualization using Recharts. It effectively translates complex portfolio data and allows me to provide a scenario simulator for interactive stress testing.
