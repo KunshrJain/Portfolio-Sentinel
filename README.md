@@ -3,7 +3,7 @@
 I (Kunsh) designed and architected this full-stack, "Agentic" Financial Intelligence System. My goal was to provide a real-time, crash-resilient command center that bridges the gap between raw market data and sophisticated capital allocation strategies.
 
 ## 1. The Fintech Core (Data & Concurrency)
-I engineered a high-velocity data harvester in Go (Golang) that pulls real-time WebSocket data (e.g., Binance trades). To ensure zero-latency price updates, I integrated a Redis caching layer and implemented an event-driven Pub/Sub architecture for immediate price drop alerts.
+I engineered a high-velocity data harvester in Go (Golang) that pulls real-time WebSocket data (e.g., Binance trades). to ensure zero-latency price updates, I integrated a Redis caching layer and implemented an event-driven Pub/Sub architecture for immediate price drop alerts.
 
 ## 2. The Finance Engine (Quantitative Logic)
 I built a Python Engine (using FastAPI) to continuously execute quantitative logic. I implemented a dynamic Risk-Parity allocation algorithm alongside an LSTM-based neural network model (via Scikit-Learn) to predict short-term Alpha. I also calculated real-time VaR and CVaR risk metrics to map conditional worst-case scenarios.
